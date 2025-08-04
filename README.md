@@ -17,7 +17,7 @@
 - Edit todo (like text, description).
 - Implement deadline of tasks.
 
-![Image](https://utfs.io/f/c63f4dc5-6833-4c65-9b07-e1421d833ee2-ng18dw.png)
+![Image](./png/page.png)
 
 
 
