@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.todo-form-container {
+  /* max-width: 70%; */
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+#todoForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 50%;
+}
+#todoForm input {
+  padding: 10px;
+}
+
+#todoDifficultyLevel {
+  padding: 6px;
+}
+
+#addnewBtn {
+  padding: 10px 0;
+  background: rgb(31, 31, 31);
+  color: white;
+  border: none;
+}
+
+#addnewBtn:hover {
+  background-color: rgb(78, 78, 78);
+}
+
+.app-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  padding: 20px;
+}
+
+.category-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  transition: background-color 0.3s;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.category-container img:hover {
+  background: #d0caca;
+  border-radius: 20px;
+}
+
+/* Target the first child which is div */
+.category-container > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo-container {
+  background: #d0caca;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: grab;
+}
+
+.dragging {
+  opacity: 0.5;
+}
+
+.dragging-over {
+  background-color: rgb(251, 232, 207);
+}
+
+#todoContainerBottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+#todoTitle {
+  font-weight: bold;
+  font-size: 20px;
+}
+#todoBody {
+  font-weight: 300;
+  font-size: 15px;
+}
+
+#todoContainerBottomLeft {
+  display: flex;
+  gap: 10px;
+}
+
+.deleteTodoIcon {
+
+}
+.deleteTodoIcon:hover {
+  background-color: #2c1f1f;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.category-dynamic-container {
+  height: 50vh;
+  overflow-y: auto;
+}

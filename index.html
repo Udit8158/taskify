@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TASKIFY - Task Management</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <section class="todo-form-container">
+      <form id="todoForm" action="">
+        <input
+          name="todoTittleInput"
+          id="todoTittleInput"
+          placeholder="What do you want to do?"
+        />
+        <input
+          name="todoDescriptionInput"
+          id="todoDescriptionInput"
+          placeholder="Add some more details..."
+        />
+
+        <select name="todoDifficultyLevel" id="todoDifficultyLevel">
+          <option selected="true" value="null">Is it hard to do 🤔?</option>
+          <option value="easy">Easy 🤣</option>
+          <option value="medium">Medium 🙂</option>
+          <option value="hard">Hard 😤</option>
+        </select>
+        <button id="addnewBtn">Add New Todo</button>
+      </form>
+    </section>
+    <section class="app-container">
+      <div class="category-container" id="todosContainer">
+        <div>
+          <h1>Todo 🤞</h1>
+          <img src="./png/menu.png" style="width: 20px; padding: 4px" />
+        </div>
+
+        <div
+          id="todos"
+          class="category-dynamic-container"
+          style="display: flex; flex-direction: column; gap: 10px"
+        >
+          <!-- Dynamically render todos -->
+        </div>
+      </div>
+
+      <div class="category-container" id="progressContainer">
+        <div>
+          <h1>In Progress 🚀</h1>
+          <img src="./png/menu.png" style="width: 20px; padding: 4px" />
+        </div>
+        <div
+          id="progressTasks"
+          class="category-dynamic-container"
+          style="display: flex; flex-direction: column; gap: 10px"
+        ></div>
+      </div>
+
+      <div class="category-container" id="reviewContainer">
+        <div>
+          <h1>Under Review 🕛</h1>
+          <img src="./png/menu.png" style="width: 20px; padding: 4px" />
+        </div>
+        <div
+          id="reviewTasks"
+          class="category-dynamic-container"
+          style="display: flex; flex-direction: column; gap: 10px"
+        ></div>
+      </div>
+
+      <div class="category-container" id="finishedTaskContainer">
+        <div>
+          <h1>Finished 🔥</h1>
+          <img src="./png/menu.png" style="width: 20px; padding: 4px" />
+        </div>
+        <div
+          id="finishedTasks"
+          class="category-dynamic-container"
+          style="display: flex; flex-direction: column; gap: 10px"
+        ></div>
+      </div>
+    </section>
+    <script type="module" src="scripts/script.js"></script>
+  </body>
+</html>
