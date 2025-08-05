@@ -1,6 +1,6 @@
 import todoComponent from "./todocomponent.js";
 import { Todo, todosState } from "./todosState.js";
-import { showAlert, initAlert } from "./alert.js";
+import { showAlert } from "./alert.js";
 
 const render = (state) => {
   console.log("rendering", state); // just to confirm
@@ -153,11 +153,11 @@ const initializeAddTodoEventListener = () => {
       return;
     }
     if (!todoDescription) {
-      alert("Please give a todo description");
+      showAlert("Please give a todo description");
       return;
     }
     if (todoDifficulty === "null") {
-      alert("Please select the todo difficulty");
+      showAlert("Please select the todo difficulty");
       return;
     }
 

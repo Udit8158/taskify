@@ -31,6 +31,33 @@
   text-align: center;
   animation: fadeIn 0.3s ease-out;
 }
+
+/* Buttons */
+.btn {
+  padding: 10px 0;
+  background: rgb(31, 31, 31);
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+#closeAlertBtn {
+  margin-top: 16px;
+  padding: 10px 20px;
+}
+
+.btn:hover {
+  background-color: rgb(78, 78, 78);
+}
+#closeAlertBtn:hover {
+  background-color: rgb(78, 78, 78);
+}
+
+/* Todo section */
+
 .todo-form-container {
   /* max-width: 70%; */
   display: flex;
@@ -50,17 +77,6 @@
 
 #todoDifficultyLevel {
   padding: 6px;
-}
-
-#addnewBtn {
-  padding: 10px 0;
-  background: rgb(31, 31, 31);
-  color: white;
-  border: none;
-}
-
-#addnewBtn:hover {
-  background-color: rgb(78, 78, 78);
 }
 
 .app-container {
@@ -128,8 +144,6 @@
   gap: 10px;
 }
 
-.deleteTodoIcon {
-}
 .deleteTodoIcon:hover {
   background-color: #2c1f1f;
   border-radius: 20px;
@@ -141,23 +155,7 @@
   overflow-y: auto;
 }
 
-
-#closeAlertBtn {
-  margin-top: 16px;
-  padding: 10px 20px;
-  background: rgb(31, 31, 31);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-#closeAlertBtn:hover {
-  background-color: rgb(78, 78, 78);
-}
-
+/* Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;

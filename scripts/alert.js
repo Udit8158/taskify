@@ -6,10 +6,10 @@ export function showAlert(message) {
 
   alertMessage.textContent = message;
   alertBox.showModal();
-  initAlert()
+  initializeCloseFunction()
 }
 
-export function initAlert() {
+function initializeCloseFunction() {
   const closeBtn = document.getElementById('closeAlertBtn');
   const alertBox = document.getElementById('alertBox');
 
