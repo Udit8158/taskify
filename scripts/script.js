@@ -1,5 +1,6 @@
 import todoComponent from "./todocomponent.js";
 import { Todo, todosState } from "./todosState.js";
+import { showAlert, initAlert } from "./alert.js";
 
 const render = (state) => {
   console.log("rendering", state); // just to confirm
@@ -147,7 +148,8 @@ const initializeAddTodoEventListener = () => {
 
     // checking the user input
     if (!todoTitle) {
-      alert("Please give a todo title");
+      // alert("Please give a todo title");
+      showAlert("Please give a todo title");
       return;
     }
     if (!todoDescription) {
@@ -168,7 +170,6 @@ const initializeAddTodoEventListener = () => {
     form.reset(); // clear the form
   });
 };
-
 
 render(todosState);
 initializeAddTodoEventListener(); // in a static element
