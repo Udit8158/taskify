@@ -13,7 +13,8 @@
 
 ## Next update goals
 
-- A good alert box UI to handle user input.
+- A good alert box UI to handle user input. (Done)
+- Make it responsive. (IMP)
 - Edit todo (like text, description).
 - Implement deadline of tasks.
 
