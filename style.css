@@ -171,8 +171,20 @@
   background: #d0caca;
 }
 
-#todoDifficultySpan {
-  background-color: rgb(234, 234, 131);
+.todoDifficultySpan {
+  border-radius: 18px;
+  padding: 4px 8px;
+}
+
+#easyTodoSpan {
+  background-color: rgb(11, 249, 118) ;
+}
+#mediumTodoSpan {
+  background-color: rgb(243, 243, 7) ;
+}
+#hardTodoSpan {
+  background-color: rgb(243, 58, 7) ;
+  color: white;
 }
 /* Animation */
 @keyframes fadeIn {

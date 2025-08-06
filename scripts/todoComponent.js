@@ -4,6 +4,7 @@ const todoComponent = (todo) => {
   const reviewTasksContainer = document.getElementById("reviewTasks");
   const finishedTaskContainer = document.getElementById("finishedTasks");
 
+  // selecting the category container (parentEl) according to todoState
   let parentEl = "";
   switch (todo.todoState) {
     case "todo":
@@ -24,6 +25,23 @@ const todoComponent = (todo) => {
       break;
   }
 
+  // selecting the todo difficulty span id according to todoDifficulty
+  let spanId = "";
+  switch (todo.todoDifficulty) {
+    case "easy":
+      spanId = "easyTodoSpan";
+      break;
+    case "medium":
+      spanId = "mediumTodoSpan";
+      break;
+    case "hard":
+      spanId = "hardTodoSpan";
+      break;
+
+    default:
+      break;
+  }
+
   // const todoTitleEl = document.createElement('span')
   // todoTitleEl.id = "todoTitle"
   // const todoBodyEl = document.createElement('span')
@@ -32,22 +50,29 @@ const todoComponent = (todo) => {
   // const todoContainerBottomEl = document.createElement("div")
   // todoContainerBottomEl.id = "todoContainerBottom"
   parentEl.innerHTML += `
-        <div class="todo-container" id="${todo.id}" draggable='true'>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span id="todoTitle">${todo.todoTitle}</span>
-        <img src="./png/x-mark.png" class="deleteTodoIcon" style="width: 15px; padding: 4px" /></div>
-          <span id="todoBody">${todo.todoDescription}</span>
-          <div id="todoContainerBottom">
-            <div id="todoContainerBottomLeft">
-              <span>${todo.todoDifficulty}</span>
-              <img src="./png/clock.png" style="width: 18px" />
-              <span>3 Aug</span>
+        <div class="todo-container" id="${todo.id}" draggable="true">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <span id="todoTitle">${todo.todoTitle}</span>
+              <img
+                src="./png/x-mark.png"
+                class="deleteTodoIcon"
+                style="width: 15px; padding: 4px"
+              />
             </div>
-            <div>
-              <span>1 hr ago</span>
+            <span id="todoBody">${todo.todoDescription}</span>
+            <div id="todoContainerBottom">
+              <div id="todoContainerBottomLeft">
+                <span id=${spanId} class="todoDifficultySpan">${todo.todoDifficulty}</span>
+              </div>
+              <div></div>
             </div>
           </div>
-        </div>
     `;
 };
 
