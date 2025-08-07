@@ -1,4 +1,4 @@
-import todoComponent from "./todocomponent.js";
+import todoComponent from "./todoComponent.js";
 import { Todo, todosState } from "./todosState.js";
 import { showAlert } from "./alert.js";
 
