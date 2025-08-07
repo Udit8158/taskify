@@ -206,6 +206,7 @@
   flex-direction: column;
   gap: 20px;
   padding: 20px;
+  margin: 0px 1rem;
 }
 
 .authform-container > div{
