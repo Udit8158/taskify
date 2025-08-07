@@ -1,9 +1,24 @@
 import todoComponent from "./todoComponent.js";
 import { Todo, todosState } from "./todosState.js";
 import { showAlert } from "./alert.js";
+import authComponent from "./authComponent.js";
 
 const render = (state) => {
   console.log("rendering", state); // just to confirm
+
+  // if auth token is not there means not signed in
+  // so display only the auth component
+  // means signup signin pages only
+  const authToken = localStorage.getItem("auth-token")
+
+  if (!authToken) {
+    
+    const isSignupMode = false;
+    authComponent(isSignupMode)
+    return
+  }
+
+  // if user have the auth token then only display todos
 
   const todosContainer = document.getElementById("todos");
   const progressTasksContainer = document.getElementById("progressTasks");

@@ -197,3 +197,29 @@
     transform: translateX(-50%) translateY(0);
   }
 }
+
+
+
+/* Sign up */
+.authform-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.authform-container > div{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.authform-container > div > input {
+  padding: 10px;
+}
+
+.authform-container > span {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
