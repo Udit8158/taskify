@@ -52,7 +52,7 @@ const updateCategoryContainer = (container, draggingElId) => {
         }
       });
       console.log(todosState);
-      render(todosState);
+      renderTodos(todosState);
       break;
     case "todosContainer":
       // update todo state (progress/todo etc)
@@ -62,7 +62,7 @@ const updateCategoryContainer = (container, draggingElId) => {
         }
       });
       console.log(todosState);
-      render(todosState);
+      renderTodos(todosState);
       break;
     case "reviewContainer":
       // update todo state (progress/todo etc)
@@ -72,7 +72,7 @@ const updateCategoryContainer = (container, draggingElId) => {
         }
       });
       console.log(todosState);
-      render(todosState);
+      renderTodos(todosState);
       break;
     case "finishedTaskContainer":
       // update todo state (progress/todo etc)
@@ -82,7 +82,7 @@ const updateCategoryContainer = (container, draggingElId) => {
         }
       });
       console.log(todosState);
-      render(todosState);
+      renderTodos(todosState);
       break;
 
     default:
@@ -128,7 +128,7 @@ const initializeDeleteTodoEventLister = (targetedBtns) => {
       todosState.splice(deleteIndex, 1);
       localStorage.setItem("todosState", JSON.stringify(todosState));
       // render
-      render(todosState);
+      renderTodos(todosState);
     });
   });
 };
@@ -167,7 +167,7 @@ const initializeAddTodoEventListener = () => {
     // add in state and render
     todosState.push(todo);
     localStorage.setItem("todosState", JSON.stringify(todosState));
-    render(todosState);
+    renderTodos(todosState);
     form.reset(); // clear the form
   });
 };
