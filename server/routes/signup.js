@@ -5,6 +5,7 @@ const signupRoute = async (req, res) => {
   const email = req.body?.email;
   const password = req.body?.password;
 
+  console.log(req.body)
   // check if user is giving the require fields
   if (!name || !email || !password) {
     res.status(400).json({ message: "Missing required field in request" });

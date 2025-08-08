@@ -4,6 +4,7 @@ require('dotenv').config()
 const User = require("./models/user");
 const signupRoute = require("./routes/signup");
 const signinRoute = require("./routes/signin");
+const cors = require('cors')
 
 const port = 3000;
 const app = express();
@@ -17,6 +18,8 @@ mongoose
 
 // Middlewares
 app.use(express.json());
+app.use(express.text());
+app.use(cors({origin: 'http://127.0.0.1:5501'}))
 
 // Routes
 app.post("/signup", signupRoute);

@@ -1,6 +1,6 @@
-const authComponent = (isSignup) => {
+const authComponent = async (isSignup) => {
   const body = document.body;
-  // console.log("auth component", isSignup); // debug
+  console.log("auth component", isSignup); // debug
 
   // create the element which is gonna append in body
   const sectionEl = document.createElement("section");
@@ -35,9 +35,9 @@ const authComponent = (isSignup) => {
   const btnEl = document.createElement("button");
   btnEl.classList.add("btn");
 
-  const divParentSpanEl = document.createElement("div")
+  const divParentSpanEl = document.createElement("div");
   const spanEl = document.createElement("span");
-  divParentSpanEl.appendChild(spanEl)
+  divParentSpanEl.appendChild(spanEl);
 
   // Dynamically render the span element and btn text
   if (isSignup) {
@@ -63,11 +63,69 @@ const authComponent = (isSignup) => {
       isSignup = true;
     }
 
-    // remove the old section and rerender the whole 
+    // remove the old section and rerender the whole
     // component with new state (in component state)
     body.removeChild(sectionEl);
     authComponent(isSignup);
   });
+
+  const signUpFunction = async () => {
+    try {
+      const body = JSON.stringify({
+        name: nameInputEl.value,
+        email: emailInputEl.value,
+        password: passwordInputEl.value,
+      });
+      const response = await fetch("http://127.0.0.1:3000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        signInFunction()
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const signInFunction = async () => {
+    try {
+      const body = JSON.stringify({
+        email: emailInputEl.value,
+        password: passwordInputEl.value,
+      });
+      const response = await fetch("http://127.0.0.1:3000/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body,
+      });
+
+      console.log(response);
+      if (response.ok) {
+        const data = await response.json(); // token
+        localStorage.setItem("auth-token", data.message);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("er", error);
+      return;
+    }
+  };
+
+  // sign up - sign in
+  if (isSignup) {
+    btnEl.addEventListener("click", signUpFunction);
+  } else {
+    btnEl.addEventListener("click", signInFunction);
+  }
 };
 
 export default authComponent;
