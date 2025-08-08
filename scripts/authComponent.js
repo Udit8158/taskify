@@ -35,7 +35,9 @@ const authComponent = (isSignup) => {
   const btnEl = document.createElement("button");
   btnEl.classList.add("btn");
 
+  const divParentSpanEl = document.createElement("div")
   const spanEl = document.createElement("span");
+  divParentSpanEl.appendChild(spanEl)
 
   // Dynamically render the span element and btn text
   if (isSignup) {
@@ -49,7 +51,7 @@ const authComponent = (isSignup) => {
   }
 
   // append all the pieces
-  sectionEl.append(divEl, btnEl, spanEl);
+  sectionEl.append(divEl, btnEl, divParentSpanEl);
   body.appendChild(sectionEl);
 
   // toggle is signup mode in between this element only

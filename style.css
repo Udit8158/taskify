@@ -209,7 +209,7 @@
   margin: 0px 1rem;
 }
 
-.authform-container > div{
+.authform-container > div:nth-child(1){
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -219,8 +219,14 @@
   padding: 10px;
 }
 
-.authform-container > span {
+.authform-container > div > span {
   display: flex;
+  width: fit-content;
   justify-content: center;
   cursor: pointer;
+  margin: 0 auto;
+
+}
+.authform-container > div > span:hover {
+  color: rgb(50, 50, 230);
 }

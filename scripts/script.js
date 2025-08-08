@@ -3,22 +3,8 @@ import { Todo, todosState } from "./todosState.js";
 import { showAlert } from "./alert.js";
 import authComponent from "./authComponent.js";
 
-const render = (state) => {
+const renderTodos = (state) => {
   console.log("rendering", state); // just to confirm
-
-  // if auth token is not there means not signed in
-  // so display only the auth component
-  // means signup signin pages only
-  const authToken = localStorage.getItem("auth-token")
-
-  if (!authToken) {
-    
-    const isSignupMode = false;
-    authComponent(isSignupMode)
-    return
-  }
-
-  // if user have the auth token then only display todos
 
   const todosContainer = document.getElementById("todos");
   const progressTasksContainer = document.getElementById("progressTasks");
@@ -208,7 +194,31 @@ const initializeToggleTodosEventListener = () => {
     });
   });
 };
-render(todosState);
-initializeAddTodoEventListener(); // in a static element
-initializeCategoryDropEventListeners(updateCategoryContainer); // in a static element
-initializeToggleTodosEventListener();
+
+
+
+
+// if auth token is not there means not signed in
+// so display only the auth component
+// means signup signin pages only
+const authToken = localStorage.getItem("auth-token");
+const todoFormContainer = document.querySelector(".todo-form-container");
+const appContainer = document.querySelector(".app-container");
+
+if (!authToken) {
+  const isSignupMode = false;  // my choice first show signup
+
+  todoFormContainer.classList.add("hide");
+  appContainer.classList.add("hide");
+  authComponent(isSignupMode);
+} else {
+  todoFormContainer.classList.remove("hide");
+  appContainer.classList.remove("hide");
+  // if user have the auth token then only display todos
+  renderTodos(todosState);
+
+  // All the event listeners related to todos and main app section
+  initializeAddTodoEventListener(); // in a static element
+  initializeCategoryDropEventListeners(updateCategoryContainer); // in a static element
+  initializeToggleTodosEventListener();
+}
