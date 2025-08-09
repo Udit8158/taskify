@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const { comparePassword } = require("../utils/hashPassword");
 
 const signinRoute = async (req, res) => {
   const email = req.body?.email;
@@ -18,7 +19,10 @@ const signinRoute = async (req, res) => {
 
     if (foundUser) {
       // check for password match
-      const correctPassword = foundUser.password === password;
+      const correctPassword = await comparePassword(
+        password,
+        foundUser.password
+      );
 
       // create a auth token from user payload
       const jwtSecret = process.env.JWT_SECRET;

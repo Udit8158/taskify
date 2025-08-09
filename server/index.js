@@ -1,15 +1,14 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
-require('dotenv').config()
+require("dotenv").config();
 const User = require("./models/user");
 const signupRoute = require("./routes/signup");
 const signinRoute = require("./routes/signin");
-const cors = require('cors')
+const cors = require("cors");
 
 const port = 3000;
 const app = express();
 const DB_URI = process.env.MONGO_URI;
-
 
 mongoose
   .connect(DB_URI)
@@ -19,8 +18,13 @@ mongoose
 // Middlewares
 app.use(express.json());
 app.use(express.text());
-app.use(cors({origin: 'http://127.0.0.1:5501'}))
-
+app.use(cors({ origin: "http://127.0.0.1:5501" }));
+// app.use((req, res, next) => {
+//   console.log(req.ip);
+//   const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+//   console.log(req.header('Origin'));
+//   next();
+// });
 // Routes
 app.post("/signup", signupRoute);
 app.post("/signin", signinRoute);
