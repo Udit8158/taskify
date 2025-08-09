@@ -2,18 +2,31 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { comparePassword } = require("../utils/hashPassword");
+const { default: z } = require("zod");
 
 const signinRoute = async (req, res) => {
-  const email = req.body?.email;
-  const password = req.body?.password;
-
-  // check if user is giving the require fields
-  if (!email || !password) {
-    res.status(400).json({ message: "Missing required field in request" });
-    return;
-  }
-
   try {
+    // validate the request body
+    const email = req.body?.email;
+    const password = req.body?.password;
+
+    const ValidUser = z.object({
+      email: z.email().max(30).min(5),
+      password: z.string().max(20).min(5),
+    });
+
+    const inputValidationResult = ValidUser.safeParse({
+      email,
+      password,
+    });
+
+    if (!inputValidationResult.success) {
+      return res
+        .status(400)
+        .json({ message: inputValidationResult.error.issues });
+    }
+    console.log("validation passed");
+
     // find the user with email
     const foundUser = await User.findOne({ email });
 

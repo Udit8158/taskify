@@ -1,20 +1,33 @@
-const {hashPassword} = require("../utils/hashPassword");
+const { hashPassword } = require("../utils/hashPassword");
 const User = require("../models/user");
+const { z } = require("zod");
 
 const signupRoute = async (req, res) => {
-  const name = req.body?.name;
-  const email = req.body?.email;
-  const password = req.body?.password;
-
-  console.log("---", req.body);
-   
-  // check if user is giving the require fields
-  if (!name || !email || !password) {
-    res.status(400).json({ message: "Missing required field in request" });
-    return;
-  }
 
   try {
+    // validate the request body
+    const name = req.body?.name;
+    const email = req.body?.email;
+    const password = req.body?.password;
+
+
+    const ValidUser = z.object({
+      name: z.string().max(20).min(3),
+      email: z.email().max(30).min(5),
+      password: z.string().max(20).min(5),
+    });
+
+    const inputValidationResult = ValidUser.safeParse({
+      name,
+      email,
+      password,
+    });
+
+    if (!inputValidationResult.success) {
+      return res.status(400).json({ message: inputValidationResult.error.issues });
+    }
+    console.log("validation passed");
+
     // try to find the user
     const foundUser = await User.findOne({ email });
 
@@ -23,7 +36,7 @@ const signupRoute = async (req, res) => {
       res.status(409).json({ message: "User with same email already exist" });
       return;
     } else {
-      const hashedPassword = await hashPassword(req.body.password)
+      const hashedPassword = await hashPassword(req.body.password);
       // create a new user and save it to db
       const newUser = new User({
         name: req.body.name,
