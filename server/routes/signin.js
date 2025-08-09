@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/UserSchema");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { comparePassword } = require("../utils/hashPassword");

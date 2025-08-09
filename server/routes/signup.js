@@ -1,15 +1,13 @@
 const { hashPassword } = require("../utils/hashPassword");
-const User = require("../models/user");
+const User = require("../models/UserSchema");
 const { z } = require("zod");
 
 const signupRoute = async (req, res) => {
-
   try {
     // validate the request body
     const name = req.body?.name;
     const email = req.body?.email;
     const password = req.body?.password;
-
 
     const ValidUser = z.object({
       name: z.string().max(20).min(3),
@@ -24,7 +22,9 @@ const signupRoute = async (req, res) => {
     });
 
     if (!inputValidationResult.success) {
-      return res.status(400).json({ message: inputValidationResult.error.issues });
+      return res
+        .status(400)
+        .json({ message: inputValidationResult.error.issues });
     }
     console.log("validation passed");
 
