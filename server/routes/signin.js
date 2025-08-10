@@ -40,7 +40,7 @@ const signinRoute = async (req, res) => {
       // create a auth token from user payload
       const jwtSecret = process.env.JWT_SECRET;
       const authToken = jwt.sign(
-        { name: foundUser.name, email: foundUser.email },
+        { name: foundUser.name, email: foundUser.email, id: foundUser.id },
         jwtSecret
       );
 
