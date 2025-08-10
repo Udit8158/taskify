@@ -9,6 +9,7 @@ const createNewTask = require("./routes/createNewTask");
 const authenticateUser = require("./middlewares/auth");
 const showAllTasks = require("./routes/showAllTasks");
 const deleteTask = require("./routes/deleteTask");
+const updateTaskRoute = require("./routes/updateTask");
 
 const port = 3000;
 const app = express();
@@ -29,5 +30,6 @@ app.post("/signin", signinRoute);
 app.get("/tasks", authenticateUser, showAllTasks);
 app.post("/tasks", authenticateUser, createNewTask);
 app.delete("/task/:id", authenticateUser, deleteTask);
+app.put("/task/:id", authenticateUser, updateTaskRoute);
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
