@@ -50,7 +50,7 @@ const todoComponent = (todo) => {
   // const todoContainerBottomEl = document.createElement("div")
   // todoContainerBottomEl.id = "todoContainerBottom"
   parentEl.innerHTML += `
-        <div class="todo-container" id="${todo.id}" draggable="true">
+        <div class="todo-container" id="${todo._id}" draggable="true">
             <div
               style="
                 display: flex;

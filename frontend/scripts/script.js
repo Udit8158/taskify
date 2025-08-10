@@ -118,18 +118,30 @@ const initializeCategoryDropEventListeners = (updateCategoryContainer) => {
 
 const initializeDeleteTodoEventLister = (targetedBtns) => {
   targetedBtns.forEach((deleteBtn) => {
-    deleteBtn.addEventListener("click", (e) => {
+    deleteBtn.addEventListener("click", async (e) => {
       console.log("delete trigger");
       const parentTodoContainer = e.target.closest(".todo-container"); // give directly the todo-container of this image
       // console.log(parentTodoContainer)
       // change state
-      const deleteIndex = todosState.findIndex(
-        (todo) => todo.id == parentTodoContainer.id
+
+      // Delete todo in server
+      const response = await fetch(
+        `http://127.0.0.1:3000/task/${parentTodoContainer.id}`,
+
+        {
+          method: "DELETE",
+          headers: {
+            "auth-token": authToken,
+          },
+        }
       );
-      todosState.splice(deleteIndex, 1);
-      localStorage.setItem("todosState", JSON.stringify(todosState));
-      // render
-      renderTodos(todosState);
+
+      const data = await response.json()
+
+      console.log(data)
+
+      // Fetch all the todos and re-render
+      fetchTodos()
     });
   });
 };
@@ -185,15 +197,12 @@ const initializeAddTodoEventListener = () => {
       // fetch from server
       fetchTodos(); // it will re-render
 
-      // add in state and render
-      // todosState.push(todo);
-      // renderTodos(todosState);
-      form.reset(); // clear the form
+     form.reset(); // clear the form
     });
   } catch (error) {
-    console.log("In error")
-    showAlert("Error occurred")
-    console.log(error)
+    console.log("In error");
+    showAlert("Error occurred");
+    console.log(error);
   }
 };
 
