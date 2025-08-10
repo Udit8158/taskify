@@ -1,7 +1,8 @@
 import todoComponent from "./todoComponent.js";
-import { Todo, todosState } from "./todosState.js";
 import { showAlert } from "./alert.js";
 import authComponent from "./authComponent.js";
+
+let todosState = [];
 
 const renderTodos = (state) => {
   console.log("rendering", state); // just to confirm
@@ -134,42 +135,66 @@ const initializeDeleteTodoEventLister = (targetedBtns) => {
 };
 
 const initializeAddTodoEventListener = () => {
-  const todoForm = document.getElementById("todoForm");
-  todoForm.addEventListener("submit", (e) => {
-    e.preventDefault(); // prevent from submission
+  try {
+    const todoForm = document.getElementById("todoForm");
+    todoForm.addEventListener("submit", async (e) => {
+      e.preventDefault(); // prevent from submission
 
-    // Get the form element
-    const form = e.target;
-    const formData = new FormData(form);
+      // Get the form element
+      const form = e.target;
+      const formData = new FormData(form);
 
-    // Extract form data
-    const todoTitle = formData.get("todoTittleInput");
-    const todoDescription = formData.get("todoDescriptionInput");
-    const todoDifficulty = formData.get("todoDifficultyLevel");
+      // Extract form data
+      const todoTitle = formData.get("todoTittleInput");
+      const todoDescription = formData.get("todoDescriptionInput");
+      const todoDifficulty = formData.get("todoDifficultyLevel");
 
-    // checking the user input
-    if (!todoTitle) {
-      // alert("Please give a todo title");
-      showAlert("Please give a todo title");
-      return;
-    }
-    if (!todoDescription) {
-      showAlert("Please give a todo description");
-      return;
-    }
-    if (todoDifficulty === "null") {
-      showAlert("Please select the todo difficulty");
-      return;
-    }
+      // checking the user input
+      if (!todoTitle) {
+        // alert("Please give a todo title");
+        showAlert("Please give a todo title");
+        return;
+      }
+      if (!todoDescription) {
+        showAlert("Please give a todo description");
+        return;
+      }
+      if (todoDifficulty === "null") {
+        showAlert("Please select the todo difficulty");
+        return;
+      }
 
-    const todo = new Todo(todoTitle, todoDescription, todoDifficulty, "todo");
+      // create a todo and post in server
+      const todo = {
+        title: todoTitle,
+        description: todoDescription,
+        difficulty: todoDifficulty,
+        state: "todo",
+      };
+      const response = await fetch("http://127.0.0.1:3000/tasks", {
+        method: "POST",
+        body: JSON.stringify(todo),
+        headers: {
+          "auth-token": authToken,
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data, response);
 
-    // add in state and render
-    todosState.push(todo);
-    localStorage.setItem("todosState", JSON.stringify(todosState));
-    renderTodos(todosState);
-    form.reset(); // clear the form
-  });
+      // fetch from server
+      fetchTodos(); // it will re-render
+
+      // add in state and render
+      // todosState.push(todo);
+      // renderTodos(todosState);
+      form.reset(); // clear the form
+    });
+  } catch (error) {
+    console.log("In error")
+    showAlert("Error occurred")
+    console.log(error)
+  }
 };
 
 const initializeToggleTodosEventListener = () => {
@@ -195,9 +220,6 @@ const initializeToggleTodosEventListener = () => {
   });
 };
 
-
-
-
 // if auth token is not there means not signed in
 // so display only the auth component
 // means signup signin pages only
@@ -206,7 +228,7 @@ const todoFormContainer = document.querySelector(".todo-form-container");
 const appContainer = document.querySelector(".app-container");
 
 if (!authToken) {
-  const isSignupMode = false;  // my choice first show signup
+  const isSignupMode = false; // my choice first show signup
 
   todoFormContainer.classList.add("hide");
   appContainer.classList.add("hide");
@@ -222,3 +244,20 @@ if (!authToken) {
   initializeCategoryDropEventListeners(updateCategoryContainer); // in a static element
   initializeToggleTodosEventListener();
 }
+
+const fetchTodos = async () => {
+  const response = await fetch("http://127.0.0.1:3000/tasks", {
+    method: "GET",
+    headers: {
+      "auth-token": authToken,
+    },
+  });
+  const data = await response.json();
+  console.log(data);
+  todosState = data.tasks;
+  console.log(todosState);
+
+  renderTodos(todosState);
+};
+
+window.onload = fetchTodos;

@@ -6,7 +6,7 @@ const todoComponent = (todo) => {
 
   // selecting the category container (parentEl) according to todoState
   let parentEl = "";
-  switch (todo.todoState) {
+  switch (todo.state) {
     case "todo":
       parentEl = todosContainer;
       break;
@@ -27,7 +27,7 @@ const todoComponent = (todo) => {
 
   // selecting the todo difficulty span id according to todoDifficulty
   let spanId = "";
-  switch (todo.todoDifficulty) {
+  switch (todo.difficulty) {
     case "easy":
       spanId = "easyTodoSpan";
       break;
@@ -58,17 +58,17 @@ const todoComponent = (todo) => {
                 align-items: center;
               "
             >
-              <span id="todoTitle">${todo.todoTitle}</span>
+              <span id="todoTitle">${todo.title}</span>
               <img
                 src="./png/x-mark.png"
                 class="deleteTodoIcon"
                 style="width: 15px; padding: 4px"
               />
             </div>
-            <span id="todoBody">${todo.todoDescription}</span>
+            <span id="todoBody">${todo.description}</span>
             <div id="todoContainerBottom">
               <div id="todoContainerBottomLeft">
-                <span id=${spanId} class="todoDifficultySpan">${todo.todoDifficulty}</span>
+                <span id=${spanId} class="todoDifficultySpan">${todo.difficulty}</span>
               </div>
               <div></div>
             </div>
