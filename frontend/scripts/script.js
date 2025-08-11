@@ -3,7 +3,7 @@ import { showAlert } from "./alert.js";
 import authComponent from "./authComponent.js";
 
 let todosState = [];
-
+const apiUrl = "http://127.0.0.1:3000";
 const renderTodos = (state) => {
   console.log("rendering", state); // just to confirm
 
@@ -47,49 +47,102 @@ const updateCategoryContainer = (container, draggingElId) => {
   switch (container.id) {
     case "progressContainer":
       // update todo state (progress/todo etc)
-      todosState.map((todo) => {
-        if (todo.id == draggingElId) {
-          todo.todoState = "progress";
+      todosState.map(async (todo) => {
+        if (todo._id == draggingElId) {
+          const response = await fetch(`${apiUrl}/task/${todo._id}`, {
+            method: "PUT",
+            headers: {
+              "auth-token": authToken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: todo.title,
+              description: todo.description,
+              difficulty: todo.difficulty,
+              state: "progress",
+            }),
+          });
+
+          const data = await response.json();
+          fetchTodos();
         }
       });
-      console.log(todosState);
-      renderTodos(todosState);
       break;
     case "todosContainer":
       // update todo state (progress/todo etc)
-      todosState.map((todo) => {
-        if (todo.id == draggingElId) {
-          todo.todoState = "todo";
+      todosState.map(async (todo) => {
+        if (todo._id == draggingElId) {
+          const response = await fetch(`${apiUrl}/task/${todo._id}`, {
+            method: "PUT",
+            headers: {
+              "auth-token": authToken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: todo.title,
+              description: todo.description,
+              difficulty: todo.difficulty,
+              state: "todo",
+            }),
+          });
+
+          const data = await response.json();
+          fetchTodos();
         }
       });
-      console.log(todosState);
-      renderTodos(todosState);
       break;
     case "reviewContainer":
       // update todo state (progress/todo etc)
-      todosState.map((todo) => {
-        if (todo.id == draggingElId) {
-          todo.todoState = "review";
+      todosState.map(async (todo) => {
+        if (todo._id == draggingElId) {
+          const response = await fetch(`${apiUrl}/task/${todo._id}`, {
+            method: "PUT",
+            headers: {
+              "auth-token": authToken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: todo.title,
+              description: todo.description,
+              difficulty: todo.difficulty,
+              state: "review",
+            }),
+          });
+
+          const data = await response.json();
+          fetchTodos();
         }
       });
-      console.log(todosState);
-      renderTodos(todosState);
+
       break;
     case "finishedTaskContainer":
       // update todo state (progress/todo etc)
-      todosState.map((todo) => {
-        if (todo.id == draggingElId) {
-          todo.todoState = "finished";
+      todosState.map(async (todo) => {
+        if (todo._id == draggingElId) {
+          const response = await fetch(`${apiUrl}/task/${todo._id}`, {
+            method: "PUT",
+            headers: {
+              "auth-token": authToken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: todo.title,
+              description: todo.description,
+              difficulty: todo.difficulty,
+              state: "finished",
+            }),
+          });
+
+          const data = await response.json();
+          fetchTodos();
         }
       });
-      console.log(todosState);
-      renderTodos(todosState);
+
       break;
 
     default:
       break;
   }
-  localStorage.setItem("todosState", JSON.stringify(todosState));
 };
 
 const initializeCategoryDropEventListeners = (updateCategoryContainer) => {
@@ -136,12 +189,12 @@ const initializeDeleteTodoEventLister = (targetedBtns) => {
         }
       );
 
-      const data = await response.json()
+      const data = await response.json();
 
-      console.log(data)
+      console.log(data);
 
       // Fetch all the todos and re-render
-      fetchTodos()
+      fetchTodos();
     });
   });
 };
@@ -197,7 +250,7 @@ const initializeAddTodoEventListener = () => {
       // fetch from server
       fetchTodos(); // it will re-render
 
-     form.reset(); // clear the form
+      form.reset(); // clear the form
     });
   } catch (error) {
     console.log("In error");
