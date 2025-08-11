@@ -1,6 +1,6 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
-require("dotenv").config();
+require("dotenv").config({path: __dirname + "/.env"});
 const User = require("./models/UserSchema");
 const signupRoute = require("./routes/signup");
 const signinRoute = require("./routes/signin");

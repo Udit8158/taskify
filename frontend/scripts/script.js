@@ -4,6 +4,8 @@ import authComponent from "./components/authComponent.js";
 import initializeTodoContainerDragEventListener from "./event-listeners/initializeTodoContainerDragEventListener.js";
 import initializeDeleteTodoEventLister from "./event-listeners/initializeDeleteTodoEventLister.js";
 import initializeCategoryDropEventListener from "./event-listeners/initializeCategoryDropEventListener.js";
+import initializeToggleTodosEventListener from "./event-listeners/initializeToggleTodosEventListener.js";
+import initializeAddTodoEventListener from "./event-listeners/initializeAddTodoEventListener.js";
 
 // Global variables
 let todosState = [];
@@ -63,93 +65,8 @@ const renderTodos = (state) => {
     );
 };
 
-const initializeAddTodoEventListener = () => {
-  try {
-    const todoForm = document.getElementById("todoForm");
-    todoForm.addEventListener("submit", async (e) => {
-      e.preventDefault(); // prevent from submission
-
-      // Get the form element
-      const form = e.target;
-      const formData = new FormData(form);
-
-      // Extract form data
-      const todoTitle = formData.get("todoTittleInput");
-      const todoDescription = formData.get("todoDescriptionInput");
-      const todoDifficulty = formData.get("todoDifficultyLevel");
-
-      // checking the user input
-      if (!todoTitle) {
-        // alert("Please give a todo title");
-        showAlert("Please give a todo title");
-        return;
-      }
-      if (!todoDescription) {
-        showAlert("Please give a todo description");
-        return;
-      }
-      if (todoDifficulty === "null") {
-        showAlert("Please select the todo difficulty");
-        return;
-      }
-
-      // create a todo and post in server
-      const todo = {
-        title: todoTitle,
-        description: todoDescription,
-        difficulty: todoDifficulty,
-        state: "todo",
-      };
-      const response = await fetch("http://127.0.0.1:3000/tasks", {
-        method: "POST",
-        body: JSON.stringify(todo),
-        headers: {
-          "auth-token": authToken,
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      console.log(data, response);
-
-      // fetch from server
-      getAllTodos(); // it will re-render
-
-      form.reset(); // clear the form
-    });
-  } catch (error) {
-    console.log("In error");
-    showAlert("Error occurred");
-    console.log(error);
-  }
-};
-
-const initializeToggleTodosEventListener = () => {
-  const toggleBtns = document.querySelectorAll(".toggleTodos");
-  toggleBtns.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const mainParentEl = btn.parentElement.parentElement;
-      const todoContainer = mainParentEl.children[1]; // hard coded (need to change if DOM changes)
-
-      // check if this category has todos
-      const isEmpty = todoContainer.children.length === 0;
-      if (isEmpty) return; // pass this do nothing
-
-      // if not empty then toggle the class
-      if (!todoContainer.classList.contains("hide")) {
-        todoContainer.classList.add("hide");
-        btn.style.transform = "rotate(90deg)";
-      } else {
-        todoContainer.classList.remove("hide");
-        btn.style.transform = "rotate(0)";
-      }
-    });
-  });
-};
-
-const updateCategoryContainer = (
-  container,
-  draggingElId,
-) => {
+// NOTE: This shouldn't be defined here, but I have to 
+const updateCategoryContainer = (container, draggingElId) => {
   switch (container.id) {
     case "progressContainer":
       // update todo state (progress/todo etc)
@@ -271,12 +188,10 @@ if (!authToken) {
   renderTodos(todosState);
 
   // All the event listeners related to todos and main app section
-  initializeAddTodoEventListener(); // in a static element
-  initializeCategoryDropEventListener(
-    updateCategoryContainer
-  ); // in a static element
+  initializeAddTodoEventListener(apiUrl, authToken, getAllTodos);
+
+  // in a static element
+  initializeCategoryDropEventListener(updateCategoryContainer); // in a static element
   initializeToggleTodosEventListener();
 }
 
-
-export {updateCategoryContainer} 
