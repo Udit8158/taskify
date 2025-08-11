@@ -1,54 +1,25 @@
+import selectParentElementOfTodo from "../utils/selectParentElementOfTodo.js";
+import selectSpanId from "../utils/selectSpanId.js";
+
 const todoComponent = (todo) => {
+  // grabbing the category containers
   const todosContainer = document.getElementById("todos");
   const progressTasksContainer = document.getElementById("progressTasks");
   const reviewTasksContainer = document.getElementById("reviewTasks");
   const finishedTaskContainer = document.getElementById("finishedTasks");
 
-  // selecting the category container (parentEl) according to todoState
-  let parentEl = "";
-  switch (todo.state) {
-    case "todo":
-      parentEl = todosContainer;
-      break;
-
-    case "progress":
-      parentEl = progressTasksContainer;
-      break;
-    case "review":
-      parentEl = reviewTasksContainer;
-      break;
-    case "finished":
-      parentEl = finishedTaskContainer;
-      break;
-
-    default:
-      break;
-  }
+  // selecting the category container (parentEl) according to todo's state
+  const parentEl = selectParentElementOfTodo(
+    todo,
+    todosContainer,
+    progressTasksContainer,
+    reviewTasksContainer,
+    finishedTaskContainer
+  );
 
   // selecting the todo difficulty span id according to todoDifficulty
-  let spanId = "";
-  switch (todo.difficulty) {
-    case "easy":
-      spanId = "easyTodoSpan";
-      break;
-    case "medium":
-      spanId = "mediumTodoSpan";
-      break;
-    case "hard":
-      spanId = "hardTodoSpan";
-      break;
+  const spanId = selectSpanId(todo);
 
-    default:
-      break;
-  }
-
-  // const todoTitleEl = document.createElement('span')
-  // todoTitleEl.id = "todoTitle"
-  // const todoBodyEl = document.createElement('span')
-  // todoBodyEl.id = "todoBody"
-
-  // const todoContainerBottomEl = document.createElement("div")
-  // todoContainerBottomEl.id = "todoContainerBottom"
   parentEl.innerHTML += `
         <div class="todo-container" id="${todo._id}" draggable="true">
             <div

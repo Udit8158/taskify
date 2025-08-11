@@ -23,7 +23,7 @@ const updateTaskRoute = async (req, res) => {
       // validated the task body
       const ValidTask = z.object({
         title: z.string().min(3).max(30),
-        description: z.string().min(3).max(50),
+        description: z.string().min(3).max(100),
         state: z.enum(["todo", "progress", "review", "finished"]),
         difficulty: z.enum(["easy", "medium", "hard"]),
       });
