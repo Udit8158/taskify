@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gray-1: oklch(0.2686 0 0);
+  --color-gray-2: oklch(0.3523 0 0);
+  --color-gray-3: oklch(0.3639 0 0);
+  --color-orange-1: oklch(0.7015 0.1816 44.96);
+  --color-orange-2: oklch(0.7547 0.1586 55.66);
+  --color-orange-3: oklch(0.8337 0.1158 65.9);
+  --font-poppins: Poppins, sans-serif;
+}
