@@ -1,6 +1,6 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
-require("dotenv").config({path: __dirname + "/.env"});
+require("dotenv").config({ path: __dirname + "/.env" });
 const User = require("./models/UserSchema");
 const signupRoute = require("./routes/signup");
 const signinRoute = require("./routes/signin");
@@ -23,7 +23,7 @@ mongoose
 // Middlewares
 app.use(express.json());
 app.use(express.text());
-app.use(cors({ origin: "http://127.0.0.1:5501" }));
+app.use(cors({ origin: ["http://127.0.0.1:5501", "http://localhost:5173"] }));
 
 app.post("/signup", signupRoute);
 app.post("/signin", signinRoute);
