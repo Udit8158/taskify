@@ -14,6 +14,17 @@ function validateInput(inputField, inputValue) {
       if (inputValue.length < 5) return "Password length should be 5 or more";
       break;
 
+    case "taskTitle":
+      if (inputValue.length < 3 || inputValue.length > 100)
+        return "Your task title length should be 3 to 100";
+      break;
+
+    case "taskDifficulty":
+      console.log(inputValue);
+      if (!["easy", "medium", "hard"].find((e) => e === inputValue))
+        return "Select your task difficulty";
+      break;
+
     default:
       return null;
   }

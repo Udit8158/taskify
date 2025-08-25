@@ -4,7 +4,7 @@ import Input from "../components/UI/Input";
 import { useEffect, useRef, useState } from "react";
 import { validateInput } from "../utils/validateInput";
 import signin from "../utils/signin";
-import useOnSubmitErr from "../hooks/useOnSubmitErr";
+import useAutoHideError from "../hooks/useAutoHideError";
 
 export default function SignInPage() {
   const [inputEmail, setInputEmail] = useState("");
@@ -13,12 +13,12 @@ export default function SignInPage() {
   const inputEmailErr = validateInput("email", inputEmail);
   const inputPasswordErr = validateInput("password", inputPassword);
 
-  const { onSubmitErr, setonSubmitErr } = useOnSubmitErr();
+  const { autoHideError, setAutoHideError } = useAutoHideError({ time: 5 });
 
   async function signInHandler() {
     // check for not providing any inputs while submitting
     if (inputEmail.length === 0 || inputPassword.length === 0) {
-      setonSubmitErr("Provide all the details");
+      setAutoHideError("Provide all the details");
       return;
     }
 
@@ -33,11 +33,11 @@ export default function SignInPage() {
 
       if (!res.ok) {
         // if sing in server error
-        setonSubmitErr(data.message);
+        setAutoHideError(data.message);
       } else {
         // successful sign in
         localStorage.setItem("auth-token", JSON.stringify(data.message));
-        setonSubmitErr(null);
+        setAutoHideError(null);
       }
     }
   }
@@ -59,7 +59,7 @@ export default function SignInPage() {
         inputErr={inputPasswordErr}
       />
       <Button text={"Sign In"} onClickHandler={signInHandler} />
-      {onSubmitErr && <p className="mx-auto text-red-400">{onSubmitErr}</p>}
+      {autoHideError && <p className="mx-auto text-red-400">{autoHideError}</p>}
       <Link to="/signup" className="mx-auto cursor-pointer hover:underline">
         Create a new account
       </Link>

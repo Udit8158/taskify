@@ -5,7 +5,7 @@ import { useState } from "react";
 import singup from "../utils/signup";
 import signin from "../utils/signin";
 import { validateInput } from "../utils/validateInput";
-import useOnSubmitErr from "../hooks/useOnSubmitErr";
+import useAutoHideError from "../hooks/useAutoHideError";
 
 export default function SignUpPage() {
   const [inputName, setInputName] = useState("");
@@ -16,7 +16,7 @@ export default function SignUpPage() {
   const inputEmailErr = validateInput("email", inputEmail);
   const inputPasswordErr = validateInput("password", inputPassword);
 
-  const { onSubmitErr, setonSubmitErr } = useOnSubmitErr();
+  const { autoHideError, setAutoHideError } = useAutoHideError({ time: 5 });
 
   async function signUpHandler() {
     // check for not providing any inputs while submitting
@@ -25,7 +25,7 @@ export default function SignUpPage() {
       inputEmail.length === 0 ||
       inputPassword.length === 0
     ) {
-      setonSubmitErr("Provide all the details");
+      setAutoHideError("Provide all the details");
       return;
     }
 
@@ -46,18 +46,18 @@ export default function SignUpPage() {
 
         if (!res.ok) {
           // if sign in problem
-          setonSubmitErr("Something wrong happened");
+          setAutoHideError("Something wrong happened");
         } else {
           // succefull sign up (with sign in)
           localStorage.setItem("auth-token", JSON.stringify(data.message));
-          setonSubmitErr(null);
+          setAutoHideError(null);
         }
       }
       // if singup problem
       else {
         // if sign up problem
         // console.log(res);
-        setonSubmitErr(data.message);
+        setAutoHideError(data.message);
       }
     }
   }
@@ -83,7 +83,7 @@ export default function SignUpPage() {
         inputErr={inputPasswordErr}
       />
       <Button text={"Sign Up"} onClickHandler={signUpHandler} />
-      {onSubmitErr && <p className="mx-auto text-red-400">{onSubmitErr}</p>}
+      {autoHideError && <p className="mx-auto text-red-400">{autoHideError}</p>}
       <Link to={"/signin"} className="mx-auto cursor-pointer hover:underline">
         I already have an account
       </Link>

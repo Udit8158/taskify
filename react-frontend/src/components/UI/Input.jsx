@@ -8,11 +8,12 @@ export default function Input({
   ref,
   type,
   inputErr,
+  pad,
+  customClass,
 }) {
   const [showErr, setShowErr] = useState(false);
-
   return (
-    <>
+    <div className="flex flex-col">
       <input
         id={id}
         placeholder={placeholder}
@@ -25,9 +26,13 @@ export default function Input({
         ref={ref}
         type={type}
         required
-        className="outline-none bg-white text-black  p-6 rounded-md"
+        className={
+          "outline-none bg-white text-black  p-6 rounded-md " + customClass
+        }
       />
-      {showErr && inputErr && <p className="text-red-400">{inputErr}</p>}
-    </>
+      {showErr && inputErr && (
+        <p className={"text-sm text-red-400 " + customClass}>{inputErr}</p>
+      )}
+    </div>
   );
 }
