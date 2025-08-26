@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 export default function Select({ onChangeInputSetter, inputErr }) {
   const [showErr, setShowErr] = useState(false);
-  console.log(inputErr);
   return (
     <div>
       <select

@@ -20,7 +20,6 @@ function validateInput(inputField, inputValue) {
       break;
 
     case "taskDifficulty":
-      console.log(inputValue);
       if (!["easy", "medium", "hard"].find((e) => e === inputValue))
         return "Select your task difficulty";
       break;

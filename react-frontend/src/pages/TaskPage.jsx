@@ -17,10 +17,10 @@ export default function TaskPage() {
     <main>
       <AddTask />
       <div className="grid grid-cols-4 mx-30 gap-24 ">
-        <TaskContainer category={"Todo"} />
-        <TaskContainer category={"In Progress"} />
-        <TaskContainer category={"Review"} />
-        <TaskContainer category={"Finished"} />
+        <TaskContainer category={"Todo"} state={"todo"} />
+        <TaskContainer category={"In Progress"} state={"progress"} />
+        <TaskContainer category={"Review"} state={"review"} />
+        <TaskContainer category={"Finished"} state={"finished"} />
       </div>
     </main>
   );
