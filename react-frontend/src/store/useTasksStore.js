@@ -2,11 +2,16 @@ import { create } from "zustand";
 import getAllTasks from "../utils/getAllTasks";
 import { updateTask } from "../utils/updateTask";
 
-const useTasksStore = create((set) => {
+const useTasksStore = create((set, get) => {
   return {
     tasks: [],
     loading: false,
     error: null,
+
+    getTasksByState: (taskState) => {
+      return get().tasks.filter((task) => task.state === taskState);
+    },
+
     fetchTasks: async () => {
       set((state) => ({ loading: true })); // start fetching
       const res = await getAllTasks(); // got response

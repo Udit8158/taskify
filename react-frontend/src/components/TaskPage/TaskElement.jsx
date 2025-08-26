@@ -1,7 +1,7 @@
 import { Cross, X } from "lucide-react";
-import React, { useEffect, useRef } from "react";
+import React, { memo, useEffect, useRef } from "react";
 
-export default function TaskElement({
+export default memo(function TaskElement({
   id,
   title,
   description,
@@ -28,7 +28,7 @@ export default function TaskElement({
     <div
       ref={taskElelementRef}
       draggable={true}
-      className="bg-gray-2 rounded-xl flex flex-col p-2.5 gap-2"
+      className="bg-gray-2 rounded-xl flex flex-col p-2.5 gap-2 cursor-pointer"
     >
       <div className="flex justify-between">
         {difficulty === "medium" && (
@@ -56,4 +56,4 @@ export default function TaskElement({
       <p className="text-white/50">{description}</p>
     </div>
   );
-}
+});

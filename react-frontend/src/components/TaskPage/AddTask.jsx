@@ -6,10 +6,12 @@ import { validateInput } from "../../utils/validateInput";
 import { addTask } from "../../utils/addTask";
 import useAutoHideError from "../../hooks/useAutoHideError";
 import Alert from "../UI/Alert";
+import useTasksStore from "../../store/useTasksStore";
 
 export default function AddTask() {
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDifficulty, setTaskDifficulty] = useState(null);
+  const fetchTasks = useTasksStore((state) => state.fetchTasks);
 
   const taskTitleInputErr = validateInput("taskTitle", taskTitle);
   const taskDifficultyInputErr = validateInput(
@@ -19,9 +21,10 @@ export default function AddTask() {
 
   const { autoHideError, setAutoHideError } = useAutoHideError({ time: 5 });
 
-  function addTaskBtnHandler() {
+  async function addTaskBtnHandler() {
     if (!taskTitleInputErr && !taskDifficultyInputErr) {
-      addTask({ title: taskTitle, difficulty: taskDifficulty });
+      await addTask({ title: taskTitle, difficulty: taskDifficulty });
+      await fetchTasks(); // fetch from server and set to state to re render
     } else {
       setAutoHideError("Provide valid task title and choose difficulty");
     }
