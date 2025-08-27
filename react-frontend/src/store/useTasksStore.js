@@ -7,6 +7,46 @@ const useTasksStore = create((set, get) => {
     tasks: [],
     loading: false,
     error: null,
+    taskDetailsOn: false,
+    // we have pass this with data while showing the task details section
+    taskDetails: {
+      id: null,
+      title: null,
+      description: null,
+      state: null,
+      difficulty: null,
+    },
+
+    // ------- actions -------
+
+    showTaskDetails: ({ id, title, description, state, difficulty }) => {
+      set(() => {
+        return { taskDetailsOn: true };
+      });
+
+      // set the data for task details page
+      set(() => {
+        return { taskDetails: { id, title, description, state, difficulty } };
+      });
+    },
+
+    hideTaskDetails: () => {
+      set(() => {
+        return { taskDetailsOn: false };
+      });
+      // while hidding set the task details data fileds null
+      set(() => {
+        return {
+          taskDetails: {
+            id: null,
+            title: null,
+            description: null,
+            state: null,
+            difficulty: null,
+          },
+        };
+      });
+    },
 
     getTasksByState: (taskState) => {
       return get().tasks.filter((task) => task.state === taskState);

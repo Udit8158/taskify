@@ -9,3 +9,25 @@
   --color-orange-3: oklch(0.8337 0.1158 65.9);
   --font-poppins: Poppins, sans-serif;
 }
+textarea {
+  field-sizing: content;
+}
+textarea::-webkit-scrollbar {
+  width: 0;
+}
+textarea::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+input[type="text"] {
+  word-wrap: break-word;
+  word-break: break-all;
+  height: 80px;
+}

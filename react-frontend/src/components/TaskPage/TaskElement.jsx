@@ -1,5 +1,6 @@
 import { Cross, X } from "lucide-react";
 import React, { memo, useEffect, useRef } from "react";
+import useTasksStore from "../../store/useTasksStore";
 
 export default memo(function TaskElement({
   id,
@@ -9,6 +10,7 @@ export default memo(function TaskElement({
   difficulty,
 }) {
   const taskElelementRef = useRef();
+  const showTaskDetails = useTasksStore((state) => state.showTaskDetails);
 
   // add drag event listner
   useEffect(() => {
@@ -29,6 +31,9 @@ export default memo(function TaskElement({
       ref={taskElelementRef}
       draggable={true}
       className="bg-gray-2 rounded-xl flex flex-col p-2.5 gap-2 cursor-pointer"
+      onClick={() =>
+        showTaskDetails({ id, title, description, state, difficulty })
+      }
     >
       <div className="flex justify-between">
         {difficulty === "medium" && (
