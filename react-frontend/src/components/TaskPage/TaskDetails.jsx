@@ -4,7 +4,11 @@ import useTasksStore from "../../store/useTasksStore";
 
 export default function TaskDetails({ title, description, state, difficulty }) {
   const hideTaskDetails = useTasksStore((state) => state.hideTaskDetails);
+
   const [inputTitle, setInputTitle] = useState(title);
+  const [inputDescription, setInputDescription] = useState(description);
+  const [inputState, setInputState] = useState(state); // task state - todo, progress etc
+  const [inputDifficulty, setInputDifficulty] = useState(difficulty);
   return (
     <div className="h-[100vh] w-[50vw] absolute top-0 right-0 z-50 bg-gray-3 flex flex-col gap-10 p-6">
       <div className="flex  gap-10">
@@ -31,7 +35,8 @@ export default function TaskDetails({ title, description, state, difficulty }) {
           </p> */}
           <select
             className="hover:opacity-50 cursor-pointer transition-all ease-in-out duration-300 outline-none"
-            value={state}
+            value={inputState}
+            onChange={(e) => setInputState(e.target.value)}
           >
             <option value={"todo"}>Todo</option>
             <option value={"progress"}>In Progress</option>
@@ -41,7 +46,8 @@ export default function TaskDetails({ title, description, state, difficulty }) {
 
           <select
             className="hover:opacity-50 cursor-pointer transition-all ease-in-out duration-300 outline-none"
-            value={difficulty}
+            value={inputDifficulty}
+            onChange={(e) => setInputDifficulty(e.target.value)}
           >
             <option value={"easy"}>Easy</option>
             <option value={"medium"}>Medium</option>
@@ -51,7 +57,11 @@ export default function TaskDetails({ title, description, state, difficulty }) {
       </div>
 
       {/*  */}
-      <textarea className="px-23 outline-none " value={description}></textarea>
+      <textarea
+        className="px-23 outline-none "
+        value={inputDescription}
+        onChange={(e) => setInputDescription(e.target.value)}
+      ></textarea>
     </div>
   );
 }
