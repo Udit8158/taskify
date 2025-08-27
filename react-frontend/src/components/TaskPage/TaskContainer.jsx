@@ -4,7 +4,7 @@ import { Plus } from "lucide-react";
 import useTasksStore from "../../store/useTasksStore";
 import { updateTask } from "../../utils/updateTask";
 import { CircularProgress } from "@mui/material";
-import useAutoHideError from "../../hooks/useAutoHideError";
+import useAutoHideFeedback from "../../hooks/useAutoHideFeedback";
 import Alert from "../UI/Alert";
 
 export default memo(function TaskContainer({ category, state }) {
@@ -16,7 +16,9 @@ export default memo(function TaskContainer({ category, state }) {
   const getTasksByState = useTasksStore((state) => state.getTasksByState);
   const filteredTasks = getTasksByState(state); // getting tasks in each cotainer by state
 
-  const { autoHideError, setAutoHideError } = useAutoHideError({ time: 4000 });
+  const { autoHideFeedback, setAutoHideFeedback } = useAutoHideFeedback({
+    time: 5, // pass second value
+  });
 
   // catch the drop
   useEffect(() => {
@@ -55,9 +57,12 @@ export default memo(function TaskContainer({ category, state }) {
 
           // after than fetch all in task ans set the state with new ones
           if (!res.error) {
-            fetchTasks();
+            await fetchTasks();
           } else {
-            setAutoHideError("Error occured in server!");
+            setAutoHideFeedback({
+              type: "error",
+              message: "Error occured in server!",
+            });
           }
         }
       }
@@ -76,7 +81,7 @@ export default memo(function TaskContainer({ category, state }) {
   return (
     <div
       ref={containerRef}
-      className="bg-[#F9E4A4]/20 rounded-xl  p-4 pb-0 flex flex-col gap-5 h-[80vh] "
+      className="bg-[#F9E4A4]/20 rounded-xl  p-4 pb-0 flex flex-col gap-5 h-full "
     >
       <div className="flex justify-between items-center sticky top-0">
         <div className="flex gap-2">
@@ -106,6 +111,8 @@ export default memo(function TaskContainer({ category, state }) {
               description={task.description}
               state={task.state}
               difficulty={task.difficulty}
+              autoHideFeedback={autoHideFeedback}
+              setAutoHideFeedback={setAutoHideFeedback}
             />
           ))}
 
@@ -113,7 +120,12 @@ export default memo(function TaskContainer({ category, state }) {
           <p className="w-fit mx-auto">Nothing to show here 🥲</p>
         )}
       </div>
-      {autoHideError && <Alert message={autoHideError} />}
+      {autoHideFeedback && (
+        <Alert
+          type={autoHideFeedback.type}
+          message={autoHideFeedback.message}
+        />
+      )}
     </div>
   );
 });

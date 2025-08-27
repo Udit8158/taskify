@@ -3,11 +3,15 @@ import AddTask from "../components/TaskPage/AddTask";
 import TaskContainer from "../components/TaskPage/TaskContainer";
 import useTasksStore from "../store/useTasksStore";
 import TaskDetails from "../components/TaskPage/TaskDetails";
+import Button from "../components/UI/Button";
+import { useNavigate } from "react-router";
 
 export default function TaskPage() {
   const fetchTasks = useTasksStore((state) => state.fetchTasks);
   const taskDetailsOn = useTasksStore((state) => state.taskDetailsOn);
   const taskDetails = useTasksStore((state) => state.taskDetails);
+
+  const navigate = useNavigate();
 
   // console.log(fetchTasks);
   useEffect(() => {
@@ -17,8 +21,20 @@ export default function TaskPage() {
     // but for now I don't need that in my app
   }, []);
 
+  function signOutHandler() {
+    localStorage.setItem("auth-token", null);
+    navigate("/signin");
+  }
+
   return (
-    <main>
+    <main className="h-screen flex flex-col">
+      <div className="flex justify-end p-4">
+        <Button
+          text="Sign Out"
+          aditionalClasses={" px-5 "}
+          onClickHandler={signOutHandler}
+        />
+      </div>
       <AddTask />
       {taskDetailsOn && (
         <TaskDetails
@@ -30,7 +46,7 @@ export default function TaskPage() {
           difficulty={taskDetails.difficulty}
         />
       )}
-      <div className="grid grid-cols-4 mx-30 gap-12 ">
+      <div className="grid grid-cols-4 mx-30 gap-12 h-full pb-4">
         <TaskContainer category={"Todo"} state={"todo"} />
         <TaskContainer category={"In Progress"} state={"progress"} />
         <TaskContainer category={"Review"} state={"review"} />

@@ -5,7 +5,7 @@ import { useState } from "react";
 import singup from "../utils/signup";
 import signin from "../utils/signin";
 import { validateInput } from "../utils/validateInput";
-import useAutoHideError from "../hooks/useAutoHideError";
+import useAutoHideFeedback from "../hooks/useAutoHideFeedback";
 
 export default function SignUpPage() {
   const [inputName, setInputName] = useState("");
@@ -16,7 +16,9 @@ export default function SignUpPage() {
   const inputEmailErr = validateInput("email", inputEmail);
   const inputPasswordErr = validateInput("password", inputPassword);
 
-  const { autoHideError, setAutoHideError } = useAutoHideError({ time: 5 });
+  const { autoHideFeedback, setAutoHideFeedback } = useAutoHideFeedback({
+    time: 5,
+  });
 
   async function signUpHandler() {
     // check for not providing any inputs while submitting
@@ -25,7 +27,7 @@ export default function SignUpPage() {
       inputEmail.length === 0 ||
       inputPassword.length === 0
     ) {
-      setAutoHideError("Provide all the details");
+      setAutoHideFeedback("Provide all the details");
       return;
     }
 
@@ -46,18 +48,18 @@ export default function SignUpPage() {
 
         if (!res.ok) {
           // if sign in problem
-          setAutoHideError("Something wrong happened");
+          setAutoHideFeedback("Something wrong happened");
         } else {
           // succefull sign up (with sign in)
           localStorage.setItem("auth-token", JSON.stringify(data.message));
-          setAutoHideError(null);
+          setAutoHideFeedback(null);
         }
       }
       // if singup problem
       else {
         // if sign up problem
         // console.log(res);
-        setAutoHideError(data.message);
+        setAutoHideFeedback(data.message);
       }
     }
   }
@@ -83,7 +85,9 @@ export default function SignUpPage() {
         inputErr={inputPasswordErr}
       />
       <Button text={"Sign Up"} onClickHandler={signUpHandler} />
-      {autoHideError && <p className="mx-auto text-red-400">{autoHideError}</p>}
+      {autoHideFeedback && (
+        <p className="mx-auto text-red-400">{autoHideFeedback}</p>
+      )}
       <Link to={"/signin"} className="mx-auto cursor-pointer hover:underline">
         I already have an account
       </Link>

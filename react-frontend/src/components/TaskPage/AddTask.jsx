@@ -4,7 +4,7 @@ import Select from "../UI/Select";
 import { Plus } from "lucide-react";
 import { validateInput } from "../../utils/validateInput";
 import { addTask } from "../../utils/addTask";
-import useAutoHideError from "../../hooks/useAutoHideError";
+import useAutoHideFeedback from "../../hooks/useAutoHideFeedback";
 import Alert from "../UI/Alert";
 import useTasksStore from "../../store/useTasksStore";
 
@@ -19,14 +19,26 @@ export default function AddTask() {
     taskDifficulty
   );
 
-  const { autoHideError, setAutoHideError } = useAutoHideError({ time: 5 });
+  const { autoHideFeedback, setAutoHideFeedback } = useAutoHideFeedback({
+    time: 5,
+  });
 
   async function addTaskBtnHandler() {
+    // no input error (passed the validation check)
+
     if (!taskTitleInputErr && !taskDifficultyInputErr) {
       await addTask({ title: taskTitle, difficulty: taskDifficulty });
       await fetchTasks(); // fetch from server and set to state to re render
+      setAutoHideFeedback({
+        type: "success",
+        message: "Task added in todo 🎯",
+      });
     } else {
-      setAutoHideError("Provide valid task title and choose difficulty");
+      // else feeback the error
+      setAutoHideFeedback({
+        type: "error",
+        message: "Provide valid task title and choose difficulty 😔",
+      });
     }
   }
 
@@ -47,9 +59,11 @@ export default function AddTask() {
           onClick={addTaskBtnHandler}
         />
       </div>
-      {autoHideError && (
-        // <p className="mx-auto text-sm text-red-400 w-fit">{autoHideError}</p>
-        <Alert type="error" message={autoHideError} />
+      {autoHideFeedback && (
+        <Alert
+          type={autoHideFeedback.type}
+          message={autoHideFeedback.message}
+        />
       )}
     </>
   );
