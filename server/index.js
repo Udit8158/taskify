@@ -25,6 +25,7 @@ app.use(express.json());
 app.use(express.text());
 app.use(cors({ origin: ["http://127.0.0.1:5501", "http://localhost:5173"] }));
 
+app.get("/test", (req, res) => res.send("Test successfull"));
 app.post("/signup", signupRoute);
 app.post("/signin", signinRoute);
 app.get("/tasks", authenticateUser, showAllTasks);
