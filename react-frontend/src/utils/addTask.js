@@ -1,8 +1,8 @@
-async function addTask({ title, difficulty }) {
+async function addTask({ title, difficulty, state }) {
   const reqBody = {
     title,
     description: "Add some description for your task",
-    state: "todo",
+    state,
     difficulty,
   };
   try {

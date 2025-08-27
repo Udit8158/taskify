@@ -8,6 +8,15 @@ const useTasksStore = create((set, get) => {
     loading: false,
     error: null,
     taskDetailsOn: false,
+    showAddTaskModal: false,
+    taskStateInModal: null, // todo, progress, review, finished
+
+    openAddTaskModal: (taskState) =>
+      set(() => ({ showAddTaskModal: true, taskStateInModal: taskState })),
+
+    closeAddTaskModal: () =>
+      set(() => ({ showAddTaskModal: false, taskStateInModal: null })),
+
     // we have pass this with data while showing the task details section
     taskDetails: {
       id: null,

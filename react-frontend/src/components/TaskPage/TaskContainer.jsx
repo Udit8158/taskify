@@ -16,6 +16,8 @@ export default memo(function TaskContainer({ category, state }) {
   const getTasksByState = useTasksStore((state) => state.getTasksByState);
   const filteredTasks = getTasksByState(state); // getting tasks in each cotainer by state
 
+  const openAddTaskModal = useTasksStore((state) => state.openAddTaskModal);
+
   const { autoHideFeedback, setAutoHideFeedback } = useAutoHideFeedback({
     time: 5, // pass second value
   });
@@ -81,7 +83,7 @@ export default memo(function TaskContainer({ category, state }) {
   return (
     <div
       ref={containerRef}
-      className="bg-[#F9E4A4]/20 rounded-xl  p-4 pb-0 flex flex-col gap-5 h-full "
+      className="bg-[#F9E4A4]/20 rounded-xl  p-4 pb-0 flex flex-col gap-5 h-[88vh] "
     >
       <div className="flex justify-between items-center sticky top-0">
         <div className="flex gap-2">
@@ -94,6 +96,7 @@ export default memo(function TaskContainer({ category, state }) {
           color="#ffffff"
           size={"30px"}
           className="hover:opacity-50 transition-all ease-in-out duration-300 cursor-pointer"
+          onClick={() => openAddTaskModal(state)}
         />
       </div>
 

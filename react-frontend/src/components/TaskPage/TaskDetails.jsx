@@ -18,7 +18,7 @@ export default function TaskDetails({
   const [inputState, setInputState] = useState(state); // task state - todo, progress etc
   const [inputDifficulty, setInputDifficulty] = useState(difficulty);
 
-  const [pageWidth, setPageWidth] = useState("50vw");
+  const [pageWidth, setPageWidth] = useState(50);
 
   // when any of these input changes update latest on server
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function TaskDetails({
 
   return (
     <div
-      className={`h-[100vh] w-[${pageWidth}] absolute top-0 right-0 z-50 bg-gray-3 flex flex-col gap-10 p-6`}
+      className={`h-[100vh] w-[${pageWidth}vw] absolute top-0 right-0 z-50 bg-gray-3 flex flex-col gap-10 p-6`}
     >
       <div className="flex justify-between  items-center gap-10">
         <X
@@ -52,7 +52,7 @@ export default function TaskDetails({
           size={35}
           className="hover:opacity-50 transition-all ease-in-out duration-300 cursor-pointer"
           onClick={() =>
-            pageWidth === "50vw" ? setPageWidth("100vw") : setPageWidth("50vw")
+            pageWidth === 50 ? setPageWidth(100) : setPageWidth(50)
           }
         />
       </div>

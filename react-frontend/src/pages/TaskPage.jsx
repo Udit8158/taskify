@@ -5,6 +5,7 @@ import useTasksStore from "../store/useTasksStore";
 import TaskDetails from "../components/TaskPage/TaskDetails";
 import Button from "../components/UI/Button";
 import { useNavigate } from "react-router";
+import { Modal } from "@mui/material";
 
 export default function TaskPage() {
   const fetchTasks = useTasksStore((state) => state.fetchTasks);
@@ -31,11 +32,13 @@ export default function TaskPage() {
       <div className="flex justify-end p-4">
         <Button
           text="Sign Out"
-          aditionalClasses={" px-5 "}
+          aditionalClasses={"px-5 py-20 text-sm"}
           onClickHandler={signOutHandler}
+          varient={"small"}
         />
       </div>
       <AddTask />
+
       {taskDetailsOn && (
         <TaskDetails
           key={taskDetails.id}
@@ -46,7 +49,7 @@ export default function TaskPage() {
           difficulty={taskDetails.difficulty}
         />
       )}
-      <div className="grid grid-cols-4 mx-30 gap-12 h-full pb-4">
+      <div className="grid grid-cols-4 mx-10 2xl:mx-30 gap-12 h-full pb-4">
         <TaskContainer category={"Todo"} state={"todo"} />
         <TaskContainer category={"In Progress"} state={"progress"} />
         <TaskContainer category={"Review"} state={"review"} />

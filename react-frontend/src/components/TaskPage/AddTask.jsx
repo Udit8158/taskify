@@ -7,11 +7,15 @@ import { addTask } from "../../utils/addTask";
 import useAutoHideFeedback from "../../hooks/useAutoHideFeedback";
 import Alert from "../UI/Alert";
 import useTasksStore from "../../store/useTasksStore";
+import { Modal } from "@mui/material";
 
-export default function AddTask() {
+export default function AddTask({}) {
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDifficulty, setTaskDifficulty] = useState(null);
   const fetchTasks = useTasksStore((state) => state.fetchTasks);
+  const showAddTaskModal = useTasksStore((state) => state.showAddTaskModal);
+  const closeAddTaskModal = useTasksStore((state) => state.closeAddTaskModal);
+  const taskStateInModal = useTasksStore((state) => state.taskStateInModal);
 
   const taskTitleInputErr = validateInput("taskTitle", taskTitle);
   const taskDifficultyInputErr = validateInput(
@@ -27,8 +31,13 @@ export default function AddTask() {
     // no input error (passed the validation check)
 
     if (!taskTitleInputErr && !taskDifficultyInputErr) {
-      await addTask({ title: taskTitle, difficulty: taskDifficulty });
+      await addTask({
+        title: taskTitle,
+        difficulty: taskDifficulty,
+        state: taskStateInModal,
+      });
       await fetchTasks(); // fetch from server and set to state to re render
+      closeAddTaskModal();
       setAutoHideFeedback({
         type: "success",
         message: "Task added in todo 🎯",
@@ -43,28 +52,34 @@ export default function AddTask() {
   }
 
   return (
-    <>
-      <div className="flex justify-between items-center w-fit md:gap-20 lg:gap-40 mx-auto my-10">
+    <Modal
+      open={showAddTaskModal}
+      onClose={closeAddTaskModal}
+      style={{ position: "absolute", top: "10vh" }}
+    >
+      <div className="flex flex-col w-10/12 md:w-7/12 lg:w-5/12 p-4 rounded-xl gap-4 mx-auto my-2 outline-none bg-gray-2">
         <Input
           placeholder="Add a task"
           pad="py-4"
           onChangeInputSetter={setTaskTitle}
           customClass="py-4 pr-18"
         />
-        <Select onChangeInputSetter={setTaskDifficulty} />
-        <Plus
-          color="#ffffff"
-          size={"50px"}
-          className="hover:opacity-50 transition-all ease-in-out duration-300 cursor-pointer"
-          onClick={addTaskBtnHandler}
-        />
+        <div className="flex items-center justify-between">
+          <Select onChangeInputSetter={setTaskDifficulty} />
+          <Plus
+            color="#ffffff"
+            size={"50px"}
+            className="hover:opacity-50 transition-all ease-in-out duration-300 cursor-pointer"
+            onClick={addTaskBtnHandler}
+          />
+        </div>
       </div>
-      {autoHideFeedback && (
+      {/* {autoHideFeedback && (
         <Alert
           type={autoHideFeedback.type}
           message={autoHideFeedback.message}
         />
-      )}
-    </>
+      )} */}
+    </Modal>
   );
 }

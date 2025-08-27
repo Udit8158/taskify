@@ -25,9 +25,3 @@ textarea::-webkit-scrollbar-thumb {
   cursor: pointer;
   border-radius: 30px;
 }
-
-input[type="text"] {
-  word-wrap: break-word;
-  word-break: break-all;
-  height: 80px;
-}

@@ -27,7 +27,8 @@ export default function Input({
         type={type}
         required
         className={
-          "outline-none bg-white text-black  p-6 rounded-md " + customClass
+          "outline-none bg-white text-black  p-4 md:p-6 rounded-md " +
+          customClass
         }
       />
       {showErr && inputErr && (

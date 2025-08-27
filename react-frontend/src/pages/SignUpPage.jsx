@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Button from "../components/UI/Button";
 import Input from "../components/UI/Input";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import singup from "../utils/signup";
 import signin from "../utils/signin";
 import { validateInput } from "../utils/validateInput";
 import useAutoHideFeedback from "../hooks/useAutoHideFeedback";
+import Alert from "../components/UI/Alert";
 
 export default function SignUpPage() {
   const [inputName, setInputName] = useState("");
@@ -15,6 +16,8 @@ export default function SignUpPage() {
   const inputNameErr = validateInput("name", inputName);
   const inputEmailErr = validateInput("email", inputEmail);
   const inputPasswordErr = validateInput("password", inputPassword);
+
+  const navigate = useNavigate();
 
   const { autoHideFeedback, setAutoHideFeedback } = useAutoHideFeedback({
     time: 5,
@@ -27,7 +30,10 @@ export default function SignUpPage() {
       inputEmail.length === 0 ||
       inputPassword.length === 0
     ) {
-      setAutoHideFeedback("Provide all the details");
+      setAutoHideFeedback({
+        type: "error",
+        message: "Provide all the details",
+      });
       return;
     }
 
@@ -48,24 +54,27 @@ export default function SignUpPage() {
 
         if (!res.ok) {
           // if sign in problem
-          setAutoHideFeedback("Something wrong happened");
+          setAutoHideFeedback({
+            type: "error",
+            message: "Something wrong happened",
+          });
         } else {
           // succefull sign up (with sign in)
           localStorage.setItem("auth-token", JSON.stringify(data.message));
-          setAutoHideFeedback(null);
+          navigate("/app");
         }
       }
       // if singup problem
       else {
         // if sign up problem
         // console.log(res);
-        setAutoHideFeedback(data.message);
+        setAutoHideFeedback({ type: "error", message: data.message });
       }
     }
   }
 
   return (
-    <div className="flex flex-col mt-30 w-[500px] mx-auto gap-5">
+    <div className="flex flex-col mt-60 md:mt-30 w-[90%] md:w-[500px] mx-auto gap-5">
       <Input
         id="input-name"
         placeholder={"Enter your name"}
@@ -86,7 +95,10 @@ export default function SignUpPage() {
       />
       <Button text={"Sign Up"} onClickHandler={signUpHandler} />
       {autoHideFeedback && (
-        <p className="mx-auto text-red-400">{autoHideFeedback}</p>
+        <Alert
+          type={autoHideFeedback.type}
+          message={autoHideFeedback.message}
+        />
       )}
       <Link to={"/signin"} className="mx-auto cursor-pointer hover:underline">
         I already have an account
