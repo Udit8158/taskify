@@ -22,8 +22,8 @@ const updateTaskRoute = async (req, res) => {
 
       // validated the task body
       const ValidTask = z.object({
-        title: z.string().min(3).max(30),
-        description: z.string().min(3).max(100),
+        title: z.string().min(3).max(50),
+        description: z.string().min(3).max(10000),
         state: z.enum(["todo", "progress", "review", "finished"]),
         difficulty: z.enum(["easy", "medium", "hard"]),
       });
@@ -51,7 +51,7 @@ const updateTaskRoute = async (req, res) => {
         console.log(taskInputValidationResult);
         // update the task
         await Task.updateOne({ _id: taskId }, taskInputValidationResult.data);
-        res.status(200).json({message: "Updated successfully"})
+        res.status(200).json({ message: "Updated successfully" });
       } else {
         return res.status(401).json({ message: "You're not allowed to do." });
       }

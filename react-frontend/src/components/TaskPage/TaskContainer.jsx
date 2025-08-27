@@ -4,6 +4,8 @@ import { Plus } from "lucide-react";
 import useTasksStore from "../../store/useTasksStore";
 import { updateTask } from "../../utils/updateTask";
 import { CircularProgress } from "@mui/material";
+import useAutoHideError from "../../hooks/useAutoHideError";
+import Alert from "../UI/Alert";
 
 export default memo(function TaskContainer({ category, state }) {
   const containerRef = useRef();
@@ -12,7 +14,9 @@ export default memo(function TaskContainer({ category, state }) {
   //   const filteredTasks = tasks.filter((task) => task.state === state);
   const isLoading = useTasksStore((state) => state.loading);
   const getTasksByState = useTasksStore((state) => state.getTasksByState);
-  const filteredTasks = getTasksByState(state);
+  const filteredTasks = getTasksByState(state); // getting tasks in each cotainer by state
+
+  const { autoHideError, setAutoHideError } = useAutoHideError({ time: 4000 });
 
   // catch the drop
   useEffect(() => {
@@ -50,7 +54,11 @@ export default memo(function TaskContainer({ category, state }) {
           });
 
           // after than fetch all in task ans set the state with new ones
-          fetchTasks();
+          if (!res.error) {
+            fetchTasks();
+          } else {
+            setAutoHideError("Error occured in server!");
+          }
         }
       }
     );
@@ -105,6 +113,7 @@ export default memo(function TaskContainer({ category, state }) {
           <p className="w-fit mx-auto">Nothing to show here 🥲</p>
         )}
       </div>
+      {autoHideError && <Alert message={autoHideError} />}
     </div>
   );
 });

@@ -22,6 +22,8 @@ export default function TaskPage() {
       <AddTask />
       {taskDetailsOn && (
         <TaskDetails
+          key={taskDetails.id}
+          id={taskDetails.id}
           title={taskDetails.title}
           description={taskDetails.description}
           state={taskDetails.state}

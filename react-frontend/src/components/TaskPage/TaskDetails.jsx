@@ -1,28 +1,66 @@
-import { X } from "lucide-react";
-import React, { useState } from "react";
+import { Maximize2, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import useTasksStore from "../../store/useTasksStore";
+import { updateTask } from "../../utils/updateTask";
 
-export default function TaskDetails({ title, description, state, difficulty }) {
+export default function TaskDetails({
+  id,
+  title,
+  description,
+  state,
+  difficulty,
+}) {
   const hideTaskDetails = useTasksStore((state) => state.hideTaskDetails);
+  const fetchTasks = useTasksStore((state) => state.fetchTasks);
 
   const [inputTitle, setInputTitle] = useState(title);
   const [inputDescription, setInputDescription] = useState(description);
   const [inputState, setInputState] = useState(state); // task state - todo, progress etc
   const [inputDifficulty, setInputDifficulty] = useState(difficulty);
+
+  const [pageWidth, setPageWidth] = useState("50vw");
+
+  // when any of these input changes update latest on server
+  useEffect(() => {
+    async function updatAndFetch(params) {
+      const res = await updateTask({
+        id,
+        title: inputTitle,
+        description: inputDescription,
+        state: inputState,
+        difficulty: inputDifficulty,
+      });
+
+      if (!res.error) {
+        fetchTasks();
+      }
+    }
+    updatAndFetch();
+  }, [inputTitle, inputDescription, inputDifficulty, inputState]);
+
   return (
-    <div className="h-[100vh] w-[50vw] absolute top-0 right-0 z-50 bg-gray-3 flex flex-col gap-10 p-6">
-      <div className="flex  gap-10">
+    <div
+      className={`h-[100vh] w-[${pageWidth}] absolute top-0 right-0 z-50 bg-gray-3 flex flex-col gap-10 p-6`}
+    >
+      <div className="flex justify-between  items-center gap-10">
         <X
           size={50}
           onClick={hideTaskDetails}
           className="hover:opacity-50 transition-all ease-in-out duration-300 cursor-pointer"
         />
-        <textarea
-          className="text-4xl outline-none w-full h-fit"
-          value={inputTitle}
-          onChange={(e) => setInputTitle(e.target.value)}
+        <Maximize2
+          size={35}
+          className="hover:opacity-50 transition-all ease-in-out duration-300 cursor-pointer"
+          onClick={() =>
+            pageWidth === "50vw" ? setPageWidth("100vw") : setPageWidth("50vw")
+          }
         />
       </div>
+      <textarea
+        className="text-4xl outline-none w-full h-fit px-23"
+        value={inputTitle}
+        onChange={(e) => setInputTitle(e.target.value)}
+      />
       {/*  */}
       <div className="flex gap-10 px-23">
         <div className="grid grid-rows-2 gap-3 w-fit">

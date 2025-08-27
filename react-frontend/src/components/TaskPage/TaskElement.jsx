@@ -57,8 +57,14 @@ export default memo(function TaskElement({
           className="hover:opacity-50 transition-all ease-in-out duration-300 cursor-pointer"
         />
       </div>
-      <p className="font-semibold text-xl">{title}</p>
-      <p className="text-white/50">{description}</p>
+      <p className="font-semibold text-xl">
+        {title.length > 30 ? title.slice(0, 30) + "..." : title}
+      </p>
+      <p className="text-white/50">
+        {description.length > 90
+          ? description.slice(0, 90) + "..."
+          : description}
+      </p>
     </div>
   );
 });
