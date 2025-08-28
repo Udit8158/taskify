@@ -44,13 +44,11 @@ export default function SignUpPage() {
         email: inputEmail,
         password: inputPassword,
       };
-      const signup_url = "http://127.0.0.1:3000/signup";
-      const { res, data } = await singup(signup_url, userDetails);
+      const { res, data } = await singup(userDetails);
 
       if (res.ok) {
         // if singup well then do sign in
-        const signin_url = "http://127.0.0.1:3000/signin";
-        const { res, data } = await signin(signin_url, userDetails);
+        const { res, data } = await signin(userDetails);
 
         if (!res.ok) {
           // if sign in problem

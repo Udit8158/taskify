@@ -6,8 +6,9 @@ async function addTask({ title, difficulty, state }) {
     difficulty,
   };
   try {
+    const url = import.meta.env.VITE_API_URL + "/tasks";
     const res = await fetch(
-      "http://127.0.0.1:3000/tasks",
+      url,
 
       {
         method: "POST",

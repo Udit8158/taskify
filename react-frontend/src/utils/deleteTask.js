@@ -1,6 +1,6 @@
 async function deleteTask(id) {
   try {
-    const url = `http://127.0.0.1:3000/task/${id}`;
+    const url = `${import.meta.env.VITE_API_URL}/task/${id}`;
     const authToken = JSON.parse(localStorage.getItem("auth-token"));
     const res = await fetch(url, {
       method: "DELETE",

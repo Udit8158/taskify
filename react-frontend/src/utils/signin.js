@@ -1,4 +1,5 @@
-async function signin(url, payload) {
+async function signin(payload) {
+  const url = import.meta.env.VITE_API_URL + "/signin";
   const res = await fetch(url, {
     method: "POST",
     headers: {

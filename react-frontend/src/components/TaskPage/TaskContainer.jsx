@@ -104,7 +104,7 @@ export default memo(function TaskContainer({ category, state }) {
         className="overflow-y-scroll scroll-smooth flex flex-col gap-5 rounded-xl"
         style={{ scrollbarWidth: "none" }}
       >
-        {isLoading && <CircularProgress color="inherit" className="mx-auto" />}
+        {/* {isLoading && <CircularProgress color="inherit" className="mx-auto" />}  // Use after debounce */}
         {filteredTasks.length > 0 &&
           filteredTasks.map((task) => (
             <TaskElement

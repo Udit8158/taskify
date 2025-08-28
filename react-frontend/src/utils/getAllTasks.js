@@ -1,6 +1,6 @@
 async function getAllTasks() {
   try {
-    const res = await fetch("http://127.0.0.1:3000/tasks", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
       method: "GET",
       headers: {
         "auth-token": JSON.parse(localStorage.getItem("auth-token")),

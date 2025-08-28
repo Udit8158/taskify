@@ -38,9 +38,9 @@ export default function SignInPage() {
         email: inputEmail,
         password: inputPassword,
       };
-      const signin_url = "http://127.0.0.1:3000/signin";
+
       setLoading(true);
-      const { res, data } = await signin(signin_url, userDetails);
+      const { res, data } = await signin(userDetails);
       setLoading(false);
       if (!res.ok) {
         // if sing in server error

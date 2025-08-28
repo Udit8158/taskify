@@ -1,5 +1,6 @@
-async function singup(url, payload) {
+async function singup(payload) {
   try {
+    const url = import.meta.env.VITE_API_URL + "/signup";
     const res = await fetch(url, {
       method: "POST",
       headers: {

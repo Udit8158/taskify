@@ -60,12 +60,12 @@ export default function TaskDetails({
     >
       <div className="flex justify-between  items-center gap-10">
         <X
-          size={50}
+          size={40}
           onClick={hideTaskDetails}
           className="hover:opacity-50 transition-all ease-in-out duration-300 cursor-pointer"
         />
         <Maximize2
-          size={35}
+          size={25}
           className="hover:opacity-50 transition-all ease-in-out duration-300 cursor-pointer"
           onClick={toggleFullScreenHandler}
         />
