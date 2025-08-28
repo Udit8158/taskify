@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import Button from "../components/UI/Button";
 import Input from "../components/UI/Input";
 import { useEffect, useRef, useState } from "react";
@@ -9,6 +9,10 @@ import Alert from "../components/UI/Alert";
 import { CircularProgress } from "@mui/material";
 
 export default function SignInPage() {
+  // authenticated check
+  const authToken = JSON.parse(localStorage.getItem("auth-token"));
+  if (authToken) return <Navigate to="/app" replace />;
+
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const [loading, setLoading] = useState(false);

@@ -4,10 +4,14 @@ import TaskContainer from "../components/TaskPage/TaskContainer";
 import useTasksStore from "../store/useTasksStore";
 import TaskDetails from "../components/TaskPage/TaskDetails";
 import Button from "../components/UI/Button";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { Modal } from "@mui/material";
 
 export default function TaskPage() {
+  // authenticated check
+  const authToken = JSON.parse(localStorage.getItem("auth-token"));
+  if (!authToken) return <Navigate to="/signin" replace />;
+
   const fetchTasks = useTasksStore((state) => state.fetchTasks);
   const taskDetailsOn = useTasksStore((state) => state.taskDetailsOn);
   const taskDetails = useTasksStore((state) => state.taskDetails);
