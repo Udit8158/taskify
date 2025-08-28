@@ -28,7 +28,7 @@ app.use(
     origin: [
       "http://127.0.0.1:5501",
       "http://localhost:5173",
-      "https://taskify-github.vercel.app/",
+      "https://taskify-github.vercel.app",
     ],
   })
 );
