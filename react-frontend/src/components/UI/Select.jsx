@@ -6,7 +6,7 @@ export default function Select({ onChangeInputSetter, inputErr }) {
     <div>
       <select
         name="task-difficulty"
-        className="outline-none bg-white  pr-8 pl-2 py-4 rounded-md text-black/60 cursor-pointer"
+        className="outline-none bg-white  pr-8 pl-2 py-3 rounded-md text-black/60 cursor-pointer"
         onChange={(e) => onChangeInputSetter(e.target.value)}
         defaultValue={null}
         onBlur={() => setShowErr(true)}

@@ -1,5 +1,5 @@
 import { Maximize2, X } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useTasksStore from "../../store/useTasksStore";
 import { updateTask } from "../../utils/updateTask";
 
@@ -20,6 +20,8 @@ export default function TaskDetails({
 
   const [pageWidth, setPageWidth] = useState(50);
 
+  const detailsContainer = useRef();
+
   // when any of these input changes update latest on server
   useEffect(() => {
     async function updatAndFetch(params) {
@@ -38,9 +40,23 @@ export default function TaskDetails({
     updatAndFetch();
   }, [inputTitle, inputDescription, inputDifficulty, inputState]);
 
+  function toggleFullScreenHandler() {
+    if (pageWidth === 50) {
+      detailsContainer.current.classList.remove("w-[50vw]");
+      detailsContainer.current.classList.add("w-[100vw]");
+      setPageWidth(100);
+    }
+    if (pageWidth === 100) {
+      detailsContainer.current.classList.remove("w-[100vw]");
+      detailsContainer.current.classList.add("w-[50vw]");
+      setPageWidth(50);
+    }
+  }
+
   return (
     <div
-      className={`h-[100vh] w-[${pageWidth}vw] absolute top-0 right-0 z-50 bg-gray-3 flex flex-col gap-10 p-6`}
+      className={`h-[100vh] absolute top-0 right-0 z-50 bg-gray-3 flex flex-col gap-10 p-6 w-[50vw]`}
+      ref={detailsContainer}
     >
       <div className="flex justify-between  items-center gap-10">
         <X
@@ -51,9 +67,7 @@ export default function TaskDetails({
         <Maximize2
           size={35}
           className="hover:opacity-50 transition-all ease-in-out duration-300 cursor-pointer"
-          onClick={() =>
-            pageWidth === 50 ? setPageWidth(100) : setPageWidth(50)
-          }
+          onClick={toggleFullScreenHandler}
         />
       </div>
       <textarea

@@ -57,12 +57,11 @@ export default function AddTask({}) {
       onClose={closeAddTaskModal}
       style={{ position: "absolute", top: "10vh" }}
     >
-      <div className="flex flex-col w-10/12 md:w-7/12 lg:w-5/12 p-4 rounded-xl gap-4 mx-auto my-2 outline-none bg-gray-2">
+      <div className="flex flex-col w-10/12 md:w-7/12 lg:w-5/12 xl:w-3/12 p-4 rounded-xl gap-4 mx-auto my-2 outline-none bg-gray-2">
         <Input
           placeholder="Add a task"
-          pad="py-4"
           onChangeInputSetter={setTaskTitle}
-          customClass="py-4 pr-18"
+          customClass="md:py-4"
         />
         <div className="flex items-center justify-between">
           <Select onChangeInputSetter={setTaskDifficulty} />
