@@ -23,7 +23,15 @@ mongoose
 // Middlewares
 app.use(express.json());
 app.use(express.text());
-app.use(cors({ origin: ["http://127.0.0.1:5501", "http://localhost:5173"] }));
+app.use(
+  cors({
+    origin: [
+      "http://127.0.0.1:5501",
+      "http://localhost:5173",
+      "https://taskify-github.vercel.app/",
+    ],
+  })
+);
 
 app.get("/test", (req, res) => res.send("Test successfull"));
 app.post("/signup", signupRoute);
